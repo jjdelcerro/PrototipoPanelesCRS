@@ -27,7 +27,7 @@
    <at name="id">/home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.mainplugin/2.4.0/scripts/addons/PrototipoPanelesCRS/newcrspanel.xml</at>
    <at name="path">addons/PrototipoPanelesCRS/newcrspanel.xml</at>
    <at name="rowspecs">CENTER:2DLU:NONE,CENTER:DEFAULT:NONE,CENTER:2DLU:NONE,CENTER:DEFAULT:NONE,CENTER:2DLU:NONE,CENTER:DEFAULT:NONE,CENTER:2DLU:NONE,FILL:DEFAULT:GROW(1.0),CENTER:2DLU:NONE</at>
-   <at name="colspecs">FILL:4DLU:NONE,FILL:DEFAULT:NONE,FILL:4DLU:NONE,FILL:DEFAULT:GROW(1.0),FILL:4DLU:NONE</at>
+   <at name="colspecs">FILL:4DLU:NONE,FILL:DEFAULT:NONE,FILL:4DLU:NONE,FILL:DEFAULT:GROW(1.0),FILL:4DLU:NONE,FILL:DEFAULT:NONE,FILL:4DLU:NONE</at>
    <at name="components">
     <object classname="java.util.LinkedList">
      <item >
@@ -195,10 +195,12 @@
              </object>
             </at>
             <at name="horizontalAlignment">4</at>
+            <at name="selectionStart">3</at>
             <at name="background" object="color">236,233,216</at>
             <at name="editable">false</at>
-            <at name="name"></at>
-            <at name="width">668</at>
+            <at name="width">726</at>
+            <at name="name"/>
+            <at name="selectionEnd">3</at>
             <at name="text">USR</at>
             <at name="height">20</at>
            </object>
@@ -253,10 +255,12 @@
              </object>
             </at>
             <at name="horizontalAlignment">4</at>
+            <at name="selectionStart">1</at>
             <at name="background" object="color">236,233,216</at>
             <at name="editable">false</at>
-            <at name="name"></at>
-            <at name="width">668</at>
+            <at name="width">726</at>
+            <at name="name"/>
+            <at name="selectionEnd">1</at>
             <at name="text">1</at>
             <at name="height">20</at>
            </object>
@@ -334,7 +338,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">2</at>
            <at name="row">8</at>
-           <at name="colspan">3</at>
+           <at name="colspan">5</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -373,7 +377,7 @@
             <at name="scrollableTracksViewportHeight">true</at>
             <at name="scrollableTracksViewportWidth">true</at>
             <at name="name"></at>
-            <at name="width">727</at>
+            <at name="width">816</at>
             <at name="scollBars">
              <object classname="com.jeta.forms.store.properties.ScrollBarsProperty">
               <at name="name">scollBars</at>
@@ -402,6 +406,74 @@
              </object>
             </at>
             <at name="height">417</at>
+           </object>
+          </at>
+         </object>
+        </at>
+       </object>
+      </at>
+     </item>
+     <item >
+      <at name="value">
+       <object classname="com.jeta.forms.store.memento.BeanMemento">
+        <super classname="com.jeta.forms.store.memento.ComponentMemento">
+         <at name="cellconstraints">
+          <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
+           <at name="column">6</at>
+           <at name="row">4</at>
+           <at name="colspan">1</at>
+           <at name="rowspan">1</at>
+           <at name="halign">default</at>
+           <at name="valign">default</at>
+           <at name="insets" object="insets">0,0,0,0</at>
+          </object>
+         </at>
+         <at name="componentclass">com.jeta.forms.gui.form.StandardComponent</at>
+        </super>
+        <at name="jetabeanclass">com.jeta.forms.gui.beans.JETABean</at>
+        <at name="beanclass">javax.swing.JButton</at>
+        <at name="beanproperties">
+         <object classname="com.jeta.forms.store.memento.PropertiesMemento">
+          <at name="classname">javax.swing.JButton</at>
+          <at name="properties">
+           <object classname="com.jeta.forms.store.support.PropertyMap">
+            <at name="border">
+             <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
+              <super classname="com.jeta.forms.store.properties.BorderProperty">
+               <at name="name">border</at>
+              </super>
+              <at name="borders">
+               <object classname="java.util.LinkedList">
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.EmptyBorderProperty">
+                   <super classname="com.jeta.forms.store.properties.BorderProperty">
+                    <at name="name">border</at>
+                   </super>
+                   <at name="top">2</at>
+                   <at name="left">2</at>
+                   <at name="bottom">2</at>
+                   <at name="right">2</at>
+                  </object>
+                 </at>
+                </item>
+               </object>
+              </at>
+             </object>
+            </at>
+            <at name="icon">
+             <object classname="com.jeta.forms.store.properties.IconProperty">
+              <at name="embedded">false</at>
+              <at name="path">addons/PrototipoPanelesCRS/images/unlock.png</at>
+              <at name="description">unlock.png</at>
+              <at name="width">16</at>
+              <at name="height">16</at>
+             </object>
+            </at>
+            <at name="name">btnForceCode</at>
+            <at name="width">20</at>
+            <at name="toolTipText">Allow enter a code manually</at>
+            <at name="height">20</at>
            </object>
           </at>
          </object>
@@ -468,31 +540,31 @@
      <at name="rows">
       <object classname="[Ljava.lang.Object;" size="9">
        <at name="item" index="0">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="1">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="2">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="3">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="4">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="5">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="6">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="7">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
        <at name="item" index="8">
-        <object classname="[Ljava.lang.Object;" size="5"/>
+        <object classname="[Ljava.lang.Object;" size="7"/>
        </at>
       </object>
      </at>
