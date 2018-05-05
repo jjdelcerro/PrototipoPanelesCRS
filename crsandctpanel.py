@@ -58,7 +58,7 @@ def showCrsAndCtDialog():
   winManager = ToolsSwingLocator.getWindowManager()
   dialog = winManager.createDialog(
     panel.asJComponent(),
-    "Create a new CRS",
+    "Select a CRS and Transformation",
     None,
     winManager.BUTTONS_OK_CANCEL
   )    
