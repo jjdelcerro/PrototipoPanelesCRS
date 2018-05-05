@@ -98,8 +98,6 @@ class NewCtPanel(FormPanel):
     self.subpanelContainer.add(subpanel.asJComponent(),BorderLayout.CENTER)
     self.asJComponent().validate()
 
-  def btnForceCode_click(self, event):
-    pass
     
 def showNewCtDialog():
   def dialogListener(event):
