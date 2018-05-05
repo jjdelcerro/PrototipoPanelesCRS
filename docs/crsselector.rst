@@ -127,4 +127,8 @@ Los metodos setXXXFilter asignan y aplican el filtro.
 El metodo getProjection seria el metodo usado para recuperar la proyeccion 
 seleccionada por el usuario.
 
+Para el JTree se utilizara un TreeModel especifico, que se encargue de manejar
+las proyecciones al vuelo, y no el DefaultTreeModel con DefaultMutableTreeNode's
+que forzaria a cargar todas las transformaciones en memoria.
+
 

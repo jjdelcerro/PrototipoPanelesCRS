@@ -14,10 +14,10 @@ class NewCrsPanel(FormPanel):
   # Too many public methods (%s/%s)
   def __init__(self):
     FormPanel.__init__(self, getResource(__file__, "newcrspanel.xml"))
-    self.setPreferredSize(500,400)
+    self.setPreferredSize(300,200)
 
   
-def showNewCrsPanel():
+def showNewCrsDialog():
   def dialogListener(event):
     if dialog.getAction() == WindowManager.BUTTON_OK:
       print "Ok"
@@ -35,9 +35,9 @@ def showNewCrsPanel():
     winManager.BUTTONS_OK_CANCEL
   )    
   dialog.addActionListener(dialogListener)
-  dialog.show(WindowManager.MODE.WINDOW)
+  dialog.show(WindowManager.MODE.DIALOG)
 
 
 def main(*args):
-  showNewCrsPanel()
+  showNewCrsDialog()
 

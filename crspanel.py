@@ -2,10 +2,14 @@
 
 import gvsig
 
-from addons.CRSPanelPrototipo.patchs.fixformpanel import fixFormPanelResourceLoader
+import random
+
+from addons.PrototipoPanelesCRS.patchs.fixformpanel import fixFormPanelResourceLoader
+from addons.PrototipoPanelesCRS.newcrspanel import  showNewCrsDialog
 
 from gvsig import getResource
 from gvsig.libs.formpanel import FormPanel
+from gvsig.libs.formpanel import MouseListenerAdapter
 from org.gvsig.tools.swing.api import ToolsSwingLocator
 from org.gvsig.tools.swing.api.windowmanager import WindowManager
 
@@ -61,22 +65,22 @@ class CRSCellRenderer(DefaultTreeCellRenderer):
 
 treeDemo = (
   (NodeData("Recents", "recents"), (
-      (NodeData("25830 - ETRS89 / UTM zone 30N", "crs"), None),
+      (NodeData("EPSG:25830 - ETRS89 / UTM zone 30N", "crs"), None),
     )
   ),
   (NodeData("Favorites", "favourite"), (
-      (NodeData("25830 - ETRS89 / UTM zone 30N", "crs"), None),
+      (NodeData("EPSG:25830 - ETRS89 / UTM zone 30N", "crs"), None),
     )
   ),
   (NodeData("EPSG", "folder_closed", "folder_open"), (
       (NodeData("Geographic coordinate systems", "folder_closed","folder_open"), (
-          (NodeData("3857 - WGS 84 / Pseudo Mercator", "crs"), None),
-          (NodeData("4326 - WGS 84", "crs"), None)
+          (NodeData("EPSG:3857 - WGS 84 / Pseudo Mercator", "crs"), None),
+          (NodeData("EPSG:4326 - WGS 84", "crs"), None)
         )
       ),
       (NodeData("Projected coordinate systems", "folder_closed","folder_open"), (
-          (NodeData("25829 - ETRS89 / UTM zone 29N", "crs"), None),
-          (NodeData("25830 - ETRS89 / UTM zone 30N", "crs"), None)
+          (NodeData("EPSG:25829 - ETRS89 / UTM zone 29N", "crs"), None),
+          (NodeData("EPSG:25830 - ETRS89 / UTM zone 30N", "crs"), None)
         )
       ),
     )
@@ -85,7 +89,7 @@ treeDemo = (
   (NodeData("User", "folder_closed", "folder_open"),None),
   (NodeData("Layers", "folder_closed", "folder_open"),
     (
-      (NodeData("25830 - ETRS89 / UTM zone 30N", "crs"), None),
+      (NodeData("EPSG:25830 - ETRS89 / UTM zone 30N", "crs"), None),
     )
   )
 )
@@ -121,49 +125,94 @@ class CrsPanel(FormPanel):
     makeTree(root,treeDemo)
     self.treeResults.getModel().setRoot(root)
 
+    self.__selectionListener = None
+    self.treeResults.addMouseListener(MouseListenerAdapter(self.treeResults_mouseClicked))
+    
+  def getProjection(self):
+    return random.choice(("EPSG:25830","EPSG:4326", "EPSG:3857"))
+
+  def addSelectionListener(self, listener):
+    self.__selectionListener = listener
+
+  def treeResults_mouseClicked(self, event):
+    if event.isPopupTrigger():
+      return
+    if event.getClickCount() != 1:
+      return
+    tree = event.getSource()
+    treePath = tree.getClosestPathForLocation(event.getX(), event.getY())
+    if treePath==None :
+      return
+    tree.setSelectionPath(treePath)
+    node = treePath.getLastPathComponent()
+    if not node.isLeaf():
+      return
+    nodeData = node.getUserObject()
+    selectedcrs = nodeData.getLabel().split(" ")[0]
+    if self.__selectionListener==None:
+      return
+    self.__selectionListener(selectedcrs)
+    
+ 
   def btnFilterDropdown_click(self, event):  
     menu = JPopupMenu()
-    menu.add(createJMenuItem("String Filter", self.setAlphaFilter, "filter_alpha"))
-    menu.add(createJMenuItem("Spatial Filter", self.setSpatialFilter, "filter_spatial"))
+    menu.add(createJMenuItem("String Filter", self.enableAlphaFilter, "filter_alpha"))
+    menu.add(createJMenuItem("Spatial Filter", self.enableSpatialFilter, "filter_spatial"))
     r = self.lblFilterAlpha.getBounds(None)
     menu.show(self.asJComponent(), r.x, r.y+r.height)
 
-  def setSpatialFilter(self, event):
+  def btnCrsAdd_click(self, event):
+    showNewCrsDialog()
+    
+  def enableSpatialFilter(self, event):
     self.lblFilterAlpha.setVisible(False)
     self.cboFilterAlpha.setVisible(False)
     self.lblFilterSpatial.setVisible(True)
     self.cboFilterSpatial.setVisible(True)
 
-  def setAlphaFilter(self, event):
+  def enableAlphaFilter(self, event):
     self.lblFilterAlpha.setVisible(True)
     self.cboFilterAlpha.setVisible(True)
     self.lblFilterSpatial.setVisible(False)
     self.cboFilterSpatial.setVisible(False)
+  
 
-class DialogListener(ActionListener):
-  def __init__(self, dialog):
-    self.__dialog = dialog
+def showCrsSelectorDialog(onselect):
+  def dialogListener(event):
+    if dialog.getAction()==WindowManager_v2.BUTTON_OK:
+      onselect(crspanel)
+            
+  crspanel = CrsPanel()
+  winManager = ToolsSwingLocator.getWindowManager()
+  dialog = winManager.createDialog(
+    crspanel.asJComponent(),
+    "Choose a CRS",
+    None,
+    winManager.BUTTONS_OK_CANCEL
+  )    
+  dialog.addActionListener(dialogListener)
+  dialog.show(WindowManager.MODE.DIALOG)
 
-  def actionPerformed(self, event):
-    if self.__dialog.getAction() == WindowManager_v2.BUTTON_OK:
+
+def showCrsPanel():
+  def dialogListener(event):
+    if dialog.getAction()==WindowManager_v2.BUTTON_OK:
       print "Ok"
     else:
       print "Cancel"
-  
-def showCrsPanel():
 
-    fixFormPanelResourceLoader()
-    
-    crspanel = CrsPanel()
-    winManager = ToolsSwingLocator.getWindowManager()
-    dialog = winManager.createDialog(
-      crspanel.asJComponent(),
-      "Select a CRS",
-      None,
-      winManager.BUTTONS_OK_CANCEL
-    )    
-    dialog.addActionListener(DialogListener(dialog))
-    dialog.show(WindowManager.MODE.WINDOW)
+  fixFormPanelResourceLoader()
+  
+  crspanel = CrsPanel()
+  winManager = ToolsSwingLocator.getWindowManager()
+  dialog = winManager.createDialog(
+    crspanel.asJComponent(),
+    "Select a CRS",
+    None,
+    winManager.BUTTONS_OK_CANCEL
+  )    
+  dialog.addActionListener(dialogListener)
+  dialog.show(WindowManager.MODE.WINDOW)
 
 
 def main(*args):
