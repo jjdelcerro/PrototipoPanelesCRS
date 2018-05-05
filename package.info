@@ -1,0 +1,21 @@
+#
+#Sat May 05 17:57:53 CEST 2018
+owner=
+code=PrototipoPanelesCRS
+java-version=j1_7
+official=false
+type=Script
+version=1.0.0-1
+state=testing
+operating-system=all
+dependencies=
+sources-url=
+web-url=
+architecture=all
+model-version=1.0.1
+categories=
+description=
+owner-url=
+buildNumber=1
+gvSIG-version=2.4.0
+name=PrototipoPanelesCRS
