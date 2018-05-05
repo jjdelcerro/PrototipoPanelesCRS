@@ -15,6 +15,13 @@ class NewCrsPanel(FormPanel):
   def __init__(self):
     FormPanel.__init__(self, getResource(__file__, "newcrspanel.xml"))
     self.setPreferredSize(300,200)
+    self.txtCode.setEditable(False)
+    
+  def btnForceCode_click(self, event):
+    self.txtCode.setEditable(True)
+    self.btnForceCode.setEnabled(False)
+    self.txtCode.requestFocusInWindow()
+    
 
   
 def showNewCrsDialog():

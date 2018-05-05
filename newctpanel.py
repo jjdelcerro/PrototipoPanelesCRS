@@ -86,11 +86,12 @@ class NewCtPanel(FormPanel):
     self.subpanelContainer.setLayout(BorderLayout())
     self.cboType.setSelectedItem(self.__subpanels[2])
     #self.setPreferredSize(600,300)
+    self.txtCode.setEditable(False)
 
   def btnForceCode_click(self, event):
-    print ">>> btnForceCode_click"
-    self.txtCode.setReadOnly(False)
+    self.txtCode.setEditable(True)
     self.btnForceCode.setEnabled(False)
+    self.txtCode.requestFocusInWindow()
     
   def cboType_change(self,event):
     subpanel = self.cboType.getSelectedItem()
