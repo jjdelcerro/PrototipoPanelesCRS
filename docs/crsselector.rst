@@ -17,7 +17,7 @@ Este panel permitira:
 
   Por ejemplo, se podria hacer algo como::
 
-    panel.setCustomLabel("Layers")
+    panel.setCustomCRSsLabel("Layers")
     for layer in iter(mapContext.deepIterator()):
       panel.addCustomCRS(layer.getProjection())
       
@@ -27,7 +27,7 @@ Este panel permitira:
   Habria que ver de añadir metodos para acceder a la estos atributos,
   algo como:
 
-  - String getCustomLabel()
+  - String getCustomCRSsLabel()
   - List<IProjection> getCustomCRSs()
 
     Que devolveria una lista inmutable de esos CRS. No se si seria
@@ -38,12 +38,12 @@ Este panel permitira:
 
   Por ejemplo, se podria hacer algo como::
 
-    panel.addSpatialFilter("Current Visible Extent", currentView().getEnvelope())
+    panel.addCRSSpatialFilter("Current Visible Extent", currentView().getEnvelope())
 
   No añadiria filtros duplicados por nombre. Y habria que añadir algun getter,
   por ejemplo:
 
-  - Map<String,IProjection> getSpatialFilters()
+  - Map<String,IProjection> getCRSSpatialFilters()
 
   Internamente habria que ver si deberia respetar el orden por el que se han
   añadido los filtros o si se ordenan por orden alfabetico.
@@ -53,40 +53,11 @@ Este panel permitira:
   
 Tambien deberia tener un metodo algo como::
 
-  void addSelectionListener(ActionListener listener)
+  void addCRSSelectionListener(ActionListener listener)
 
 Para escuchar cuando se va seleccionando una proyeccion en el tree (usar
 ActionListenerSupport de tools.swing).
 
-En el manager de swing de proyecciones, habria que incluir algo como::
-
-  public List<IProjection> getHistory();
-  
-  public List<IProjection> getFavorites();
-
-  public List<String> getHistoryAlphaFilters()
-
-Seran listas mutables y nunca seran null.
-"getHistoryAlphaFilters" se usara para rellenar el combo "cboFilterAlpha"
-con los ultimos valores usados como filtros alphanumericos.
-
-Ademas se incluiran un par de metodos::
-
-  public DynObject getPreferences();
-
-  public void setPreferences(DynObject preferences);
-  
-Por defecto el manager tendra una instancia de ese DynObject que
-mantendra en memoria. Sera algo como unas preferencias por defecto
-que no persisten. En el contexto de la aplicacion "gvSIG desktop",
-desde el plugin se asignara un DynObject que se obtendra de las
-preferencias del plugin, de forma que sea andami quien se encargara
-de persistirlo.
-
-En la documentacion el API se definira en los javadocs de uno de
-estos metodos la estructura que debera tener este DynObject.
-Tendra como minimo dos campos de tipo lista de proyecciones 
-para almacenar las listas de historico y favoritos.
 
 Por defecto en el dialogo estara activada la busqueda por texto, 
 y se presentara el arbol con las ramas colapsadas viendose solo las
@@ -113,22 +84,24 @@ Se incluiran metodos como::
 
   public void setProjection(IProjection projection)
 
-  public void setSpatialFilter(String filter)
+  public void setCRSSpatialFilter(String filter)
 
-  public String getSpatialFilter()
+  public String getCRSSpatialFilter()
 
-  public void setAlphaFilter(String filter)
+  public void setCRSAlphaFilter(String filter)
 
-  public String getAlphaFilter()
+  public String getCRSAlphaFilter()
+
+  public void applyCRSFilyer()
 
 
-Los metodos setXXXFilter asignan y aplican el filtro.
+Los metodos setXXXCRSFilter asignan el filtro y con applyFilter se aplicaria.
 
 El metodo getProjection seria el metodo usado para recuperar la proyeccion 
 seleccionada por el usuario.
 
-Para el JTree se utilizara un TreeModel especifico, que se encargue de manejar
-las proyecciones al vuelo, y no el DefaultTreeModel con DefaultMutableTreeNode's
-que forzaria a cargar todas las transformaciones en memoria.
+Para el JTree se utilizara un TreeNode especifico, que se encargue de manejar
+las listas de proyecciones al vuelo, y no el DefaultMutableTreeNode
+que forzaria a cargar todas las proyecciones en memoria.
 
 
